@@ -1,0 +1,1 @@
+export const connection_str = 'mongodb+srv://Raza27630:JtXrl0TMRK8aTJZt@web-chat-clustor1-hqs1h.mongodb.net/WebChat?retryWrites=true&w=majority';

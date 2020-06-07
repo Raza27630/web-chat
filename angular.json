@@ -1,0 +1,386 @@
+{
+  "version": 1,
+  "projects": {
+    "web-chat": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/web-chat",
+      "sourceRoot": "apps/web-chat/src",
+      "prefix": "web-chat",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/web-chat",
+            "index": "apps/web-chat/src/index.html",
+            "main": "apps/web-chat/src/main.ts",
+            "polyfills": "apps/web-chat/src/polyfills.ts",
+            "tsConfig": "apps/web-chat/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/web-chat/src/favicon.ico",
+              "apps/web-chat/src/assets"
+            ],
+            "styles": ["apps/web-chat/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web-chat/src/environments/environment.ts",
+                  "with": "apps/web-chat/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "web-chat:build",
+            "proxyConfig": "apps/web-chat/proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "web-chat:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "web-chat:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/web-chat/tsconfig.app.json",
+              "apps/web-chat/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/web-chat/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/web-chat/jest.config.js",
+            "tsConfig": "apps/web-chat/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/web-chat/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "web-chat-e2e": {
+      "root": "apps/web-chat-e2e",
+      "sourceRoot": "apps/web-chat-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/web-chat-e2e/cypress.json",
+            "tsConfig": "apps/web-chat-e2e/tsconfig.e2e.json",
+            "devServerTarget": "web-chat:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "web-chat:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/web-chat-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/web-chat-e2e/**"]
+          }
+        }
+      }
+    },
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
+      "projectType": "application",
+      "prefix": "api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": ["apps/api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/api/tsconfig.app.json",
+              "apps/api/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/api/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "tsConfig": "apps/api/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "api-interfaces": {
+      "root": "libs/api-interfaces",
+      "sourceRoot": "libs/api-interfaces/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/api-interfaces/tsconfig.lib.json",
+              "libs/api-interfaces/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/api-interfaces/jest.config.js",
+            "tsConfig": "libs/api-interfaces/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "user-api": {
+      "root": "apps/user-api",
+      "sourceRoot": "apps/user-api/src",
+      "projectType": "application",
+      "prefix": "user-api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/user-api",
+            "main": "apps/user-api/src/main.ts",
+            "tsConfig": "apps/user-api/tsconfig.app.json",
+            "assets": ["apps/user-api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/user-api/src/environments/environment.ts",
+                  "with": "apps/user-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "user-api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/user-api/tsconfig.app.json",
+              "apps/user-api/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/user-api/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/user-api/jest.config.js",
+            "tsConfig": "apps/user-api/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "chat-histroy-api": {
+      "root": "apps/chat-histroy-api",
+      "sourceRoot": "apps/chat-histroy-api/src",
+      "projectType": "application",
+      "prefix": "chat-histroy-api",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/chat-histroy-api",
+            "main": "apps/chat-histroy-api/src/main.ts",
+            "tsConfig": "apps/chat-histroy-api/tsconfig.app.json",
+            "assets": ["apps/chat-histroy-api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/chat-histroy-api/src/environments/environment.ts",
+                  "with": "apps/chat-histroy-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "chat-histroy-api:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/chat-histroy-api/tsconfig.app.json",
+              "apps/chat-histroy-api/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/chat-histroy-api/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/chat-histroy-api/jest.config.js",
+            "tsConfig": "apps/chat-histroy-api/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "auth-jwt-lib": {
+      "root": "libs/auth-jwt-lib",
+      "sourceRoot": "libs/auth-jwt-lib/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/auth-jwt-lib/tsconfig.lib.json",
+              "libs/auth-jwt-lib/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/auth-jwt-lib/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/auth-jwt-lib/jest.config.js",
+            "tsConfig": "libs/auth-jwt-lib/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "user-info": {
+      "root": "libs/user-info",
+      "sourceRoot": "libs/user-info/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/user-info/tsconfig.lib.json",
+              "libs/user-info/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/user-info/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/user-info/jest.config.js",
+            "tsConfig": "libs/user-info/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular",
+    "analytics": false
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "web-chat"
+}
