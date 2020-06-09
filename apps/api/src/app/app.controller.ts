@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
 
 import { Message, CreateUserDto } from '@web-chat/api-interfaces';
 import { UserId } from '@web-chat/user-info';
@@ -20,5 +20,9 @@ export class AppController {
   @Post('addUserToGroup/:id')
   postUserToGroup(@Param('id') memberId: string, @UserId() userId: string) {
     return this.appService.postUserToGroup(memberId, userId);
+  }
+  @Get('user')
+  getUser(@Query('email') email:string) {
+    return this.appService.getUser(email);
   }
 }

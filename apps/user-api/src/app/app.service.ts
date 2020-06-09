@@ -33,4 +33,7 @@ export class AppService {
       }
     }), catchError(err => of(err)));
   }
+  getUser(email: string) {
+    return from(this.userModel.findOne({ userEmail: email }).exec());
+  }
 }

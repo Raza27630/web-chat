@@ -23,9 +23,46 @@
             "aot": true,
             "assets": [
               "apps/web-chat/src/favicon.ico",
-              "apps/web-chat/src/assets"
+              "apps/web-chat/src/assets",
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/ionicons/dist/ionicons/svg",
+                "output": "./svg"
+              }
             ],
-            "styles": ["apps/web-chat/src/styles.scss"],
+            "styles": [
+              "apps/web-chat/src/styles.scss",
+              {
+                "input": "node_modules/@ionic/angular/css/normalize.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/structure.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/typography.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/core.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/padding.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/float-elements.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/text-alignment.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/text-transformation.css"
+              },
+              {
+                "input": "node_modules/@ionic/angular/css/flex-utils.css"
+              },
+              {
+                "input": "apps/web-chat/src/theme/variables.css"
+              }
+            ],
             "scripts": []
           },
           "configurations": {
@@ -84,7 +121,10 @@
               "apps/web-chat/tsconfig.app.json",
               "apps/web-chat/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/web-chat/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/web-chat/**"
+            ]
           }
         },
         "test": {
@@ -94,6 +134,30 @@
             "tsConfig": "apps/web-chat/tsconfig.spec.json",
             "passWithNoTests": true,
             "setupFile": "apps/web-chat/src/test-setup.ts"
+          }
+        },
+        "ionic-cordova-serve": {
+          "builder": "@ionic/angular-toolkit:cordova-serve",
+          "options": {
+            "cordovaBuildTarget": "web-chat:ionic-cordova-build",
+            "devServerTarget": "web-chat:serve"
+          },
+          "configurations": {
+            "production": {
+              "cordovaBuildTarget": "web-chat:ionic-cordova-build:production",
+              "devServerTarget": "web-chat:serve:production"
+            }
+          }
+        },
+        "ionic-cordova-build": {
+          "builder": "@ionic/angular-toolkit:cordova-build",
+          "options": {
+            "browserTarget": "web-chat:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "web-chat:build:production"
+            }
           }
         }
       }
@@ -119,8 +183,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/web-chat-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/web-chat-e2e/**"]
+            "tsConfig": [
+              "apps/web-chat-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/web-chat-e2e/**"
+            ]
           }
         }
       }
@@ -138,7 +207,9 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -167,7 +238,10 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/api/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/api/**"
+            ]
           }
         },
         "test": {
@@ -193,7 +267,10 @@
               "libs/api-interfaces/tsconfig.lib.json",
               "libs/api-interfaces/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/api-interfaces/**"
+            ]
           }
         },
         "test": {
@@ -219,7 +296,9 @@
             "outputPath": "dist/apps/user-api",
             "main": "apps/user-api/src/main.ts",
             "tsConfig": "apps/user-api/tsconfig.app.json",
-            "assets": ["apps/user-api/src/assets"]
+            "assets": [
+              "apps/user-api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -248,7 +327,10 @@
               "apps/user-api/tsconfig.app.json",
               "apps/user-api/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/user-api/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/user-api/**"
+            ]
           }
         },
         "test": {
@@ -274,7 +356,9 @@
             "outputPath": "dist/apps/chat-histroy-api",
             "main": "apps/chat-histroy-api/src/main.ts",
             "tsConfig": "apps/chat-histroy-api/tsconfig.app.json",
-            "assets": ["apps/chat-histroy-api/src/assets"]
+            "assets": [
+              "apps/chat-histroy-api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -303,7 +387,10 @@
               "apps/chat-histroy-api/tsconfig.app.json",
               "apps/chat-histroy-api/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/chat-histroy-api/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/chat-histroy-api/**"
+            ]
           }
         },
         "test": {
@@ -329,7 +416,10 @@
               "libs/auth-jwt-lib/tsconfig.lib.json",
               "libs/auth-jwt-lib/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/auth-jwt-lib/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/auth-jwt-lib/**"
+            ]
           }
         },
         "test": {
@@ -355,7 +445,10 @@
               "libs/user-info/tsconfig.lib.json",
               "libs/user-info/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/user-info/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/user-info/**"
+            ]
           }
         },
         "test": {

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Message } from '@web-chat/api-interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'web-chat-root',
@@ -8,6 +7,12 @@ import { Message } from '@web-chat/api-interfaces';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  hello$ = this.http.get<Message>('/api/hello');
-  constructor(private http: HttpClient) {}
+  constructor(private readonly router: Router) {
+    const userObjId = JSON.parse(localStorage.getItem('user_ref'))?.['_id'];
+    if (!userObjId) {
+      this.router.navigate(['auth', 'login']);
+    } else {
+      this.router.navigate(['main', 'chat']);
+    }
+  }
 }

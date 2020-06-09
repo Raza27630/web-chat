@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Message, CreateUserDto, UserGroup } from '@web-chat/api-interfaces';
+import { Message, CreateUserDto, UserGroup, User } from '@web-chat/api-interfaces';
 import { ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
 
 @Injectable()
@@ -26,5 +26,8 @@ export class AppService {
       userId,
       memberId
     });
+  }
+  getUser(email: string) {
+    return this._client.send<User>({ cmd: 'get_User' }, email);
   }
 }

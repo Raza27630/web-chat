@@ -15,4 +15,8 @@ export class AppController {
   async postUserToGroup(@Payload() payload: { userId: string, memberId: string }) {
     return this.appService.addUserToGroup(payload.userId, payload.memberId);
   }
+  @MessagePattern({ cmd: 'get_User' })
+  async getUser(@Payload() email: string) {
+    return this.appService.getUser(email);
+  }
 }
