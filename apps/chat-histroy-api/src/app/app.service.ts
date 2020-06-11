@@ -1,8 +1,39 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Conversation, IMessage } from '@web-chat/api-interfaces';
+import { Model } from 'mongoose';
+import { from, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class AppService {
-  getData(): { message: string } {
-    return { message: 'Welcome to chat-histroy-api!' };
+  constructor(
+    @InjectModel(Conversation.name) private readonly chatModel: Model<Conversation>) { }
+  createChatRoom(members: string[]) {
+    return from(this.chatModel.findOne({ members: { $all: members } })).pipe(switchMap(conversation => {
+      if (conversation) {
+        return of(conversation);
+      }
+      const chat = new this.chatModel({
+        members,
+        messages: []
+      });
+      return from(chat.save());
+    }));
+
+  }
+  getChatHistory(chatId: string) {
+    return from(this.chatModel.findOne({ _id: chatId }).select('messages').exec());
+  }
+  getAllChatHistory(userId: string) {
+    return from(this.chatModel.find({ members: { $eq: userId } }).populate('members').exec());
+  }
+  updateChat(incomingMsg: IMessage, chatId: string) {
+    return this.chatModel.findOne({ _id: chatId }, (er, res) => {
+      if (!er) {
+        res.messages.push(incomingMsg);
+        res.save();
+      }
+    }).exec();
   }
 }

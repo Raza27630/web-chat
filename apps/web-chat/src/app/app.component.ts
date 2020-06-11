@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   constructor(private readonly router: Router) {
-    const userObjId = JSON.parse(localStorage.getItem('user_ref'))?.['_id'];
+    const userObjId = JSON.parse(sessionStorage.getItem('user_ref'))?.['_id'];
     if (!userObjId) {
       this.router.navigate(['auth', 'login']);
     } else {

@@ -10,13 +10,13 @@ export class AuthService {
 
   constructor(private readonly http: HttpClient) { }
   signUp(createUserDto: CreateUserDto) {
-    return this.http.post<User>('/api/user', createUserDto).pipe(tap(user => localStorage.setItem('user_ref', JSON.stringify(user))));
+    return this.http.post<User>('/api/user', createUserDto).pipe(tap(user => sessionStorage.setItem('user_ref', JSON.stringify(user))));
   }
   signIn(userEmail: string) {
     return this.http.get<User>('/api/user', {
       params: {
         email: userEmail
       }
-    }).pipe(tap(user => localStorage.setItem('user_ref', JSON.stringify(user))));
+    }).pipe(tap(user => sessionStorage.setItem('user_ref', JSON.stringify(user))));
   }
 }

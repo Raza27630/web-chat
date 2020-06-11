@@ -1,1 +1,12 @@
-<p>members works!</p>
+<ion-list>
+    <ion-list-header>Members</ion-list-header>
+    <ion-item *ngFor="let member of (members$ | async)" (click)="openChat(member)">
+      <ion-avatar slot="start">
+        <img src="./assets/avatar.svg">
+      </ion-avatar>
+      <ion-label>
+        <h3>{{member?.displayName}}</h3>
+        <p>{{member?.userEmail}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>

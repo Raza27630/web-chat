@@ -36,4 +36,7 @@ export class AppService {
   getUser(email: string) {
     return from(this.userModel.findOne({ userEmail: email }).exec());
   }
+  getAllUsers(userId:string){
+    return from(this.userModel.find({ _id: { $ne: userId }}).exec());
+  }
 }

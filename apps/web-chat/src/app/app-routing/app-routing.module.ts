@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { HeaderTokenService } from '../auth/header-token.service';
 
 const routes: Routes = [
@@ -13,11 +13,14 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('../auth/auth.module').then(m => m.AuthModule)
   },
+  {
+    path: 'chat-window/:chatId',
+    loadChildren: () => import('../chat-window/chat-window.module').then(m => m.ChatWindowModule)
+  }
 ];
 
 @NgModule({
   imports: [
-    CommonModule,
     RouterModule.forRoot(routes)
   ],
   providers: [

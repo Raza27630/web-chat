@@ -1,0 +1,33 @@
+.message-draft-container{
+    width: 100%;
+    .native-input{
+        width: 80%;
+        display: inherit !important;
+    }
+    .send-message-action{
+        width: 20%;
+    }
+}
+.message-scroll-content{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .message-list{
+        margin-top: auto;
+        margin-bottom: 0;
+    }
+    .message-container{
+        display: inline-block;
+        max-width: 70%;
+        &.others{
+           background-color: #ffffff;
+           h4{
+            color: green; 
+           }
+        }
+        &.align-right{
+            background-color: lightblue;
+            float: right;
+        }
+    }
+}

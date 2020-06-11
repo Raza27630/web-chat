@@ -19,4 +19,8 @@ export class AppController {
   async getUser(@Payload() email: string) {
     return this.appService.getUser(email);
   }
+  @MessagePattern({ cmd: 'get_AllUser' })
+  async getAllUser(@Payload() userId: string) {
+    return this.appService.getAllUsers(userId);
+  }
 }

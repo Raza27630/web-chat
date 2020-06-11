@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
 import { Document, Schema as DocSchema } from 'mongoose';
 import { User } from './api-user-schemas.schema';
+import { IMessage } from './api-interfaces';
 
 @Schema()
 export class Conversation extends Document {
@@ -14,13 +15,9 @@ export class Conversation extends Document {
         sender: DocSchema.Types.ObjectId,
         timeStamp: Date,
         message: String,
-
+        seen:Boolean
     }]))
-    messages: {
-        sender: string;
-        timeStamp: Date;
-        message: string;
-    }[];
+    messages: IMessage[];
 }
 export const ConversationSchema = SchemaFactory.createForClass(Conversation);
 

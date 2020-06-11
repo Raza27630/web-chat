@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/main/chat"></ion-back-button>
+            <ion-chip>
+                <ion-avatar>
+                    <img src="./assets/avatar.svg">
+                </ion-avatar>
+                <ion-label>{{displayName}}</ion-label>
+            </ion-chip>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div class="message-scroll-content">
+        <ion-list class="message-list">
+            <ion-item *ngFor="let msg of (messages$ | async )">
+               <div class="message-container" [ngClass]="{'align-right': msg.sender===myId,'others':msg.sender!==myId}">
+                <h4>{{msg.sender}}</h4>
+                <p>{{msg.message}}</p>
+               </div>
+            </ion-item>
+        </ion-list>
+    </div>
+</ion-content>
+<ion-footer class="ion-no-border">
+    <ion-item>
+        <ion-textarea placeholder="Type here.." [formControl]="msgCtrl"></ion-textarea>
+        <ion-button class="send-message-action" item-right [disabled]="!msgCtrl.valid" (click)="sendMsg()">
+            <ion-icon name="arrow-forward-circle"></ion-icon>
+        </ion-button>
+
+    </ion-item>
+</ion-footer>
