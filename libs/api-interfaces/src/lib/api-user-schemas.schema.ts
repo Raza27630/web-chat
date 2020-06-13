@@ -27,10 +27,11 @@ export class UserGroup extends Document {
     @Prop({
         type: DocSchema.Types.ObjectId,
         required: true,
+        ref: User.name,
         unique: true
     })
     groupUser: string;
-    @Prop([{ type: DocSchema.Types.ObjectId, ref: User.name, required: true }])
+    @Prop([{ type: DocSchema.Types.ObjectId, ref: User.name, required: true, unique: true }])
     members: string[];
 }
 export const UserGroupSchema = SchemaFactory.createForClass(UserGroup);

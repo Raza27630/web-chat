@@ -23,4 +23,12 @@ export class AppController {
   async getAllUser(@Payload() userId: string) {
     return this.appService.getAllUsers(userId);
   }
+  @MessagePattern({ cmd: 'search_User' })
+  async searchUser(@Payload() data: { userId: string, searchText: string }) {
+    return this.appService.getFilteredUser(data.userId, data.searchText);
+  }
+  @MessagePattern({ cmd: 'get_UserGroup' })
+  async getUserGroup(@Payload() userId: string,) {
+    return this.appService.getUserGroup(userId);
+  }
 }

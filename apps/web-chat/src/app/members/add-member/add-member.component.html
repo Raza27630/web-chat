@@ -1,1 +1,27 @@
-<p>add-member works!</p>
+<ion-toolbar>
+    <div>
+        <ion-buttons slot="start" item-left>
+            <ion-back-button defaultHref="main/chat"></ion-back-button>
+            <ion-title> Add User</ion-title>
+        </ion-buttons>
+    </div>
+    <ion-searchbar debounce="500" showCancelButton="never" placeholder="Find active user..." inputmode="text"
+        (ionChange)="findUser($event.target.value)"></ion-searchbar>
+</ion-toolbar>
+<ion-content>
+    <ion-list>
+        <ion-list-header>Available Users</ion-list-header>
+        <ion-item *ngFor="let member of (user$ | async)">
+            <ion-avatar slot="start">
+                <img src="./assets/avatar.svg">
+            </ion-avatar>
+            <ion-label>
+                <h3>{{member?.displayName}}</h3>
+                <p>{{member?.userEmail}}</p>
+            </ion-label>
+            <ion-button class="send-message-action" item-right (click)="addUserToGroup(member)">
+                <ion-icon name="add"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>

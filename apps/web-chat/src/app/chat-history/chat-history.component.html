@@ -1,1 +1,13 @@
-<p>chat-histroy works!</p>
+<ion-list>
+    <ion-list-header>Chats</ion-list-header>
+    <ion-item *ngFor="let chat of (chatInfo$ | async)" (click)="openChat(chat)">
+      <ion-avatar slot="start">
+        <img src="./assets/avatar.svg">
+      </ion-avatar>
+      <ion-label>
+        <h3>{{chat?.name}}</h3>
+        <p>{{chat?.lastMessage?.message}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+

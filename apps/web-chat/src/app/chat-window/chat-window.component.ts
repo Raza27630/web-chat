@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild, ElementRef, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { pluck, switchMap, tap, map, withLatestFrom, take, scan } from 'rxjs/operators';
+import { pluck, switchMap, tap, map, take, scan } from 'rxjs/operators';
 import { ChatService } from './chat.service';
-import { IMessage } from '@web-chat/api-interfaces';
+import { IMessage, IChatMessage } from '@web-chat/api-interfaces';
 import { Observable, merge, Subject, of } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import * as io from 'socket.io-client';
@@ -11,19 +11,24 @@ import * as io from 'socket.io-client';
   selector: 'web-chat-chat-window',
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatWindowComponent implements OnInit, OnDestroy {
+  @ViewChild('scrollContent') scrollContent: ElementRef<HTMLDivElement>;
   displayName: string;
-  messages$: Observable<IMessage[]>;
+  messages$: Observable<IChatMessage[]>;
   myId: string;
-  newMsg$ = new Subject<IMessage>();
+  myName: string;
+  newMsg$ = new Subject<IChatMessage>();
   msgCtrl = new FormControl('', [Validators.minLength(1)]);
   chatId: string;
   socket = io('http://localhost:3333/chat');
   constructor(private readonly routerSnapShot: ActivatedRoute,
     private readonly chatService: ChatService) {
-    this.myId = JSON.parse(sessionStorage.getItem('user_ref'))?.['_id'];
+    const user = JSON.parse(sessionStorage.getItem('user_ref'));
+    this.myId = user?.['_id'];
+    this.myName = user?.['displayName'];
     this.displayName = this.routerSnapShot.snapshot.queryParamMap.get('activeMember');
   }
 
@@ -34,8 +39,9 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
     }), switchMap(chat => this.chatService.getChatHistory(chat)));
     // scoket msges
     const socketMsg$ = this.newMsg$.asObservable().pipe(map(e => [e]));
-    this.messages$ = merge(onLoad$, socketMsg$).pipe(scan((acc, crr) => [...acc, ...crr], []));
-    this.socket.on('msgToClients', (msg: IMessage) => {
+    this.messages$ = merge(onLoad$, socketMsg$).pipe(scan((acc, crr) => [...acc, ...crr], []),
+      tap(() => setTimeout(() => this.scrollToBottom(), 200)));
+    this.socket.on('msgToClients', (msg: IChatMessage) => {
       console.log(msg);
       this.newMsg$.next(msg);
     });
@@ -50,9 +56,15 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
     }
     this.chatService.sendMessage(this.chatId, msg).subscribe();
     this.msgCtrl.setValue('');
-    this.socket.emit('pingToServer', { room: this.chatId, message: msg });
+    this.socket.emit('pingToServer', {
+      room: this.chatId,
+      message: { ...msg, ...{ sender: { _id: this.myId, displayName: this.myName } } }
+    });
   }
   ngOnDestroy() {
     this.socket.emit('leaveChat', this.chatId);
+  }
+  scrollToBottom() {
+    this.scrollContent.nativeElement.scroll(0, this.scrollContent.nativeElement.scrollHeight);
   }
 }

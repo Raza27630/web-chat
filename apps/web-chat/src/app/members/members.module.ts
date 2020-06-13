@@ -5,10 +5,15 @@ import { AddMemberComponent } from './add-member/add-member.component';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
-const routes: Routes = [{
-  path: '',
-  component: MembersComponent
-}]
+const routes: Routes = [
+  {
+    path: '',
+    component: MembersComponent
+  },
+  {
+    path: 'add',
+    component: AddMemberComponent
+  }]
 
 @NgModule({
   declarations: [MembersComponent, AddMemberComponent],

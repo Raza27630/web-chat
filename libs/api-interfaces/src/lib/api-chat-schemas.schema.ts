@@ -12,10 +12,10 @@ export class Conversation extends Document {
     }])
     members: string[];
     @Prop(raw([{
-        sender: DocSchema.Types.ObjectId,
+        sender: { type: DocSchema.Types.ObjectId, ref: User.name },
         timeStamp: Date,
         message: String,
-        seen:Boolean
+        seen: Boolean
     }]))
     messages: IMessage[];
 }

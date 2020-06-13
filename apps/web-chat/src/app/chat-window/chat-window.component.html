@@ -1,7 +1,9 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/main/chat"></ion-back-button>
+            <a [routerLink]="['/','main','chat']">
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+            </a>
             <ion-chip>
                 <ion-avatar>
                     <img src="./assets/avatar.svg">
@@ -12,13 +14,16 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <div class="message-scroll-content">
+    <div #scrollContent class="message-scroll-content">
         <ion-list class="message-list">
             <ion-item *ngFor="let msg of (messages$ | async )">
-               <div class="message-container" [ngClass]="{'align-right': msg.sender===myId,'others':msg.sender!==myId}">
-                <h4>{{msg.sender}}</h4>
-                <p>{{msg.message}}</p>
-               </div>
+                <div class="meassge-block"
+                    [ngClass]="{'align-right': msg.sender?._id===myId,'others':msg.sender?._id!==myId}">
+                    <div class="message-container">
+                        <h4>{{msg.sender?.displayName}}</h4>
+                        <p>{{msg.message}}</p>
+                    </div>
+                </div>
             </ion-item>
         </ion-list>
     </div>

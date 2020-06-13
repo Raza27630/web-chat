@@ -25,4 +25,12 @@ export class AppController {
   getAlluser(@UserId() userId: string) {
     return this.appService.getAllUser(userId);
   }
+  @Get('searchUser')
+  searchUsers(@UserId() userId: string, @Query('text') searchText: string) {
+    return this.appService.searchUsers(userId, searchText);
+  }
+  @Get('userGroup')
+  getUserGroup(@UserId() userId: string) {
+    return this.appService.getUserGroup(userId);
+  }
 }

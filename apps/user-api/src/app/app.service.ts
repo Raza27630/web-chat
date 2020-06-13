@@ -9,9 +9,6 @@ import { switchMap, catchError } from 'rxjs/operators';
 export class AppService {
   constructor(@InjectModel(User.name) private readonly userModel: Model<User>,
     @InjectModel(UserGroup.name) private readonly userGroupModel: Model<UserGroup>) { }
-  getData(): { message: string } {
-    return { message: 'Welcome to user-api!' };
-  }
   createUser(payload: CreateUserDto) {
     const createdUser = new this.userModel(payload);
     return from(createdUser.save());
@@ -28,15 +25,28 @@ export class AppService {
         });
         return createdUserGroup.save();
       } else {
-        res.members.push(memberId);
-        return res.save();
+        return res.updateOne({ _id: res._id },
+          { $addToSet: { members: memberId } }).exec();
       }
     }), catchError(err => of(err)));
   }
   getUser(email: string) {
     return from(this.userModel.findOne({ userEmail: email }).exec());
   }
-  getAllUsers(userId:string){
-    return from(this.userModel.find({ _id: { $ne: userId }}).exec());
+  getAllUsers(userId: string) {
+    return from(this.userModel.find({ _id: { $ne: userId } }).exec());
+  }
+  getUserGroup(userId: string) {
+    return from(this.userGroupModel.findOne({ groupUser: userId }).populate('members').exec());
+  }
+  getFilteredUser(userId: string, searchText: string) {
+    return from(this.userModel.find({
+      _id: { $ne: userId },
+      $and: [{
+        $or: [{ userEmail: { $regex: searchText } }, {
+          displayName: { $regex: searchText }
+        }]
+      }]
+    }).exec());
   }
 }

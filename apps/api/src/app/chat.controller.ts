@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Put, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Logger } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { UserId } from '@web-chat/user-info';
 import { IMessage } from '@web-chat/api-interfaces';
 
 @Controller('chat')
 export class ChatController {
+    private logger= new Logger('ChatController');
     constructor(
         private readonly chatService: ChatService) {
 
@@ -17,7 +18,7 @@ export class ChatController {
     async createChatRoom(@Body() members: string[]) {
         return this.chatService.createChatRoom(members);
     }
-    @Get('mychat')
+    @Get()
     async getMyChat(@UserId() userId: string) {
         return this.chatService.getMyChat(userId);
     }

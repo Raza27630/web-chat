@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {  CreateUserDto, UserGroup, User } from '@web-chat/api-interfaces';
+import { CreateUserDto, UserGroup, User } from '@web-chat/api-interfaces';
 import { ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
 
 @Injectable()
@@ -27,7 +27,13 @@ export class AppService {
   getUser(email: string) {
     return this._client.send<User>({ cmd: 'get_User' }, email);
   }
-  getAllUser(userId:string){
-    return this._client.send<User[]>({ cmd: 'get_AllUser' },userId);
+  getAllUser(userId: string) {
+    return this._client.send<User[]>({ cmd: 'get_AllUser' }, userId);
+  }
+  searchUsers(userId: string, searchText: string) {
+    return this._client.send<User[]>({ cmd: 'search_User' }, { userId, searchText });
+  }
+  getUserGroup(userId: string) {
+    return this._client.send<UserGroup>({ cmd: 'get_UserGroup' }, userId);
   }
 }

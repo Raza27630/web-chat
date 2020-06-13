@@ -2,7 +2,6 @@
     width: 100%;
     .native-input{
         width: 80%;
-        display: inherit !important;
     }
     .send-message-action{
         width: 20%;
@@ -12,22 +11,40 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: absolute;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
     .message-list{
         margin-top: auto;
         margin-bottom: 0;
     }
-    .message-container{
-        display: inline-block;
-        max-width: 70%;
-        &.others{
-           background-color: #ffffff;
-           h4{
-            color: green; 
-           }
-        }
+    .meassge-block{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
         &.align-right{
-            background-color: lightblue;
-            float: right;
+            align-items: flex-end;
+            .message-container{
+                background-color: lightblue;
+                align-items: flex-end;
+            }
+        }
+        &.others{
+            .message-container{
+                background-color: #ffffff;
+                align-items: flex-start;
+                h4{
+                    color: green; 
+                   }
+            }
+         }
+         .message-container{
+            display: flex;
+            flex-direction: column;
+            max-width: 65%;
         }
     }
+    
 }

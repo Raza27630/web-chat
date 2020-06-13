@@ -1,6 +1,6 @@
 import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { IMessage } from '@web-chat/api-interfaces';
+import { IChatMessage } from '@web-chat/api-interfaces';
 
 @WebSocketGateway({ namespace: 'chat' })
 export class ChatGateway {
@@ -15,10 +15,10 @@ export class ChatGateway {
     client.leave(room);
   }
   @SubscribeMessage('pingToServer')
-  handleChat(client: Socket, data: { room: string, message: IMessage }) {
+  handleChat(client: Socket, data: { room: string, message: IChatMessage }) {
     this.wss.to(data.room).emit('msgToClients', data.message);
   }
-  emitHttpMsgToClients(room: string, message: IMessage) {
+  emitHttpMsgToClients(room: string, message: IChatMessage) {
     this.wss.to(room).emit('msgToClients', message);
   }
 }

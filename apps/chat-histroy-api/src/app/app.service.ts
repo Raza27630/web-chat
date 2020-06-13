@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Conversation, IMessage } from '@web-chat/api-interfaces';
 import { Model } from 'mongoose';
 import { from, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 
 @Injectable()
 export class AppService {
@@ -23,10 +23,18 @@ export class AppService {
 
   }
   getChatHistory(chatId: string) {
-    return from(this.chatModel.findOne({ _id: chatId }).select('messages').exec());
+    return from(this.chatModel.findOne({ _id: chatId }).populate('messages.sender').select('messages').exec());
   }
   getAllChatHistory(userId: string) {
-    return from(this.chatModel.find({ members: { $eq: userId } }).populate('members').exec());
+    return from(this.chatModel.find({ members: { $eq: userId } }).populate('members').exec()).pipe(map(res => {
+      return res.map(r => {
+        return {
+          _id: r._id,
+          name: r.members.filter(k => k['_id'].toString() !== userId)[0]?.['displayName'],
+          lastMessage: r.messages.splice(r.messages.length - 1, 1)?.[0]
+        }
+      })
+    }));
   }
   updateChat(incomingMsg: IMessage, chatId: string) {
     return this.chatModel.findOne({ _id: chatId }, (er, res) => {

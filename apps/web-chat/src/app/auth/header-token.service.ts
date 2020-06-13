@@ -10,7 +10,8 @@ export class HeaderTokenService implements HttpInterceptor {
     if(userObj){
       const clone = req.clone({
         setHeaders: {
-          userid: userObj?.['_id']
+          userid: userObj?.['_id'],
+          'Cache-Control': 'no-cache'
         }
       });
       return handler.handle(clone);
