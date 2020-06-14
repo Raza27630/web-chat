@@ -16,7 +16,9 @@ export class User extends Document {
     })
     displayName: string;
 
-    @Prop()
+    @Prop({
+        type: String
+    })
     img: string;
 }
 

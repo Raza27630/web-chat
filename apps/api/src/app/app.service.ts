@@ -36,4 +36,7 @@ export class AppService {
   getUserGroup(userId: string) {
     return this._client.send<UserGroup>({ cmd: 'get_UserGroup' }, userId);
   }
+  updateAvatar(userId: string, avatar: string) {
+    return this._client.send<User>({ cmd: 'update_Avatar' }, { userId, avatar });
+  }
 }

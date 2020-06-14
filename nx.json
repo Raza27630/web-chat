@@ -43,6 +43,9 @@
     },
     "user-info": {
       "tags": []
+    },
+    "ui-elements": {
+      "tags": []
     }
   }
 }

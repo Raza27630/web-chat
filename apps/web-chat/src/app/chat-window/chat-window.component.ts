@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild, ElementRef,
 import { ActivatedRoute } from '@angular/router';
 import { pluck, switchMap, tap, map, take, scan } from 'rxjs/operators';
 import { ChatService } from './chat.service';
-import { IMessage, IChatMessage } from '@web-chat/api-interfaces';
+import { IChatMessage } from '@web-chat/api-interfaces';
 import { Observable, merge, Subject, of } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import * as io from 'socket.io-client';
@@ -17,6 +17,7 @@ import * as io from 'socket.io-client';
 export class ChatWindowComponent implements OnInit, OnDestroy {
   @ViewChild('scrollContent') scrollContent: ElementRef<HTMLDivElement>;
   displayName: string;
+  displayImg: string;
   messages$: Observable<IChatMessage[]>;
   myId: string;
   myName: string;
@@ -30,6 +31,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
     this.myId = user?.['_id'];
     this.myName = user?.['displayName'];
     this.displayName = this.routerSnapShot.snapshot.queryParamMap.get('activeMember');
+    this.displayImg = this.routerSnapShot.snapshot.queryParamMap.get('activeMemberImg') || '';
   }
 
   ngOnInit(): void {

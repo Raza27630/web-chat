@@ -1,9 +1,7 @@
 <ion-list>
     <ion-list-header>Chats</ion-list-header>
     <ion-item *ngFor="let chat of (chatInfo$ | async)" (click)="openChat(chat)">
-      <ion-avatar slot="start">
-        <img src="./assets/avatar.svg">
-      </ion-avatar>
+      <web-chat-avatar class="avatar-medium" [url]="chat.img"></web-chat-avatar>
       <ion-label>
         <h3>{{chat?.name}}</h3>
         <p>{{chat?.lastMessage?.message}}</p>

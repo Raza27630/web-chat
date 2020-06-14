@@ -26,7 +26,8 @@ export class ChatHistoryComponent implements OnInit, OnDestroy {
   openChat(chat: IChatHistoryInfo) {
     this.router.navigate(['chat-window', chat._id], {
       queryParams: {
-        activeMember: chat.name
+        activeMember: chat.name,
+        activeMemberImg: chat.img
       }
     });
   }

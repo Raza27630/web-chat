@@ -28,7 +28,8 @@ export class MembersComponent implements OnInit {
       this.router.navigate(['chat-window', res._id], {
         queryParams: {
           activeMember: member.displayName,
-          activeMemberId: member._id
+          activeMemberId: member._id,
+          activeMemberImg: member.img
         }
       });
     });

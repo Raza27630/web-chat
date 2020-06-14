@@ -30,6 +30,7 @@ export interface IChatHistoryInfo {
   _id: string;
   name: string;
   lastMessage?: IMessage;
+  img?: string;
 }
 export interface IUserGroupUI {
   _id: string;

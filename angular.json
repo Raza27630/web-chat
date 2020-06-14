@@ -121,10 +121,7 @@
               "apps/web-chat/tsconfig.app.json",
               "apps/web-chat/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/web-chat/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/web-chat/**"]
           }
         },
         "test": {
@@ -183,13 +180,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/web-chat-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/web-chat-e2e/**"
-            ]
+            "tsConfig": ["apps/web-chat-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/web-chat-e2e/**"]
           }
         }
       }
@@ -207,9 +199,7 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -238,10 +228,7 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/api/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/api/**"]
           }
         },
         "test": {
@@ -267,10 +254,7 @@
               "libs/api-interfaces/tsconfig.lib.json",
               "libs/api-interfaces/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/api-interfaces/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**"]
           }
         },
         "test": {
@@ -296,9 +280,7 @@
             "outputPath": "dist/apps/user-api",
             "main": "apps/user-api/src/main.ts",
             "tsConfig": "apps/user-api/tsconfig.app.json",
-            "assets": [
-              "apps/user-api/src/assets"
-            ]
+            "assets": ["apps/user-api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -327,10 +309,7 @@
               "apps/user-api/tsconfig.app.json",
               "apps/user-api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/user-api/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/user-api/**"]
           }
         },
         "test": {
@@ -356,9 +335,7 @@
             "outputPath": "dist/apps/chat-histroy-api",
             "main": "apps/chat-histroy-api/src/main.ts",
             "tsConfig": "apps/chat-histroy-api/tsconfig.app.json",
-            "assets": [
-              "apps/chat-histroy-api/src/assets"
-            ]
+            "assets": ["apps/chat-histroy-api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -387,10 +364,7 @@
               "apps/chat-histroy-api/tsconfig.app.json",
               "apps/chat-histroy-api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/chat-histroy-api/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/chat-histroy-api/**"]
           }
         },
         "test": {
@@ -416,10 +390,7 @@
               "libs/auth-jwt-lib/tsconfig.lib.json",
               "libs/auth-jwt-lib/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/auth-jwt-lib/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/auth-jwt-lib/**"]
           }
         },
         "test": {
@@ -445,10 +416,7 @@
               "libs/user-info/tsconfig.lib.json",
               "libs/user-info/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/user-info/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/user-info/**"]
           }
         },
         "test": {
@@ -458,6 +426,38 @@
             "tsConfig": "libs/user-info/tsconfig.spec.json",
             "passWithNoTests": true
           }
+        }
+      }
+    },
+    "ui-elements": {
+      "projectType": "library",
+      "root": "libs/ui-elements",
+      "sourceRoot": "libs/ui-elements/src",
+      "prefix": "web-chat",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ui-elements/tsconfig.lib.json",
+              "libs/ui-elements/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ui-elements/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ui-elements/jest.config.js",
+            "tsConfig": "libs/ui-elements/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/ui-elements/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
         }
       }
     }

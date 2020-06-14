@@ -4,6 +4,7 @@ import { ChatWindowComponent } from './chat-window.component';
 import { IonicModule } from '@ionic/angular';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UiElementsModule } from '@web-chat/ui-elements';
 const routes: Routes = [
   {
     path: '',
@@ -17,7 +18,8 @@ const routes: Routes = [
     CommonModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    UiElementsModule
   ]
 })
 export class ChatWindowModule { }

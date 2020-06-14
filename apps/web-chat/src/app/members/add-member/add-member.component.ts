@@ -4,8 +4,6 @@ import { User } from '@web-chat/api-interfaces';
 import { MembersService } from '../members.service';
 import { switchMap, filter, catchError } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
-import { SrvRecord } from 'dns';
-
 @Component({
   selector: 'web-chat-add-member',
   templateUrl: './add-member.component.html',

@@ -1,0 +1,8 @@
+<ion-avatar slot="start" class="main-avatar-wrapper">
+    <ng-container *ngIf="(url$ | async) as img; else noPic">
+        <img [src]="(img | avatar) | async">
+    </ng-container>
+    <ng-template #noPic>
+        <img src="./assets/avatar.svg">
+    </ng-template>
+</ion-avatar>

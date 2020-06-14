@@ -10,6 +10,8 @@ export class ChatHistoryService {
 
   constructor(private readonly http: HttpClient) { }
   getChatHistory() {
-    return this.http.get<IChatHistoryInfo[]>('/api/chat').pipe(map(chatInfo => chatInfo.filter(x => !!x.lastMessage)));
+    return this.http.get<IChatHistoryInfo[]>('/api/chat').pipe(map(chatInfo =>
+      chatInfo.filter(x => !!x.lastMessage).sort((a, b) =>
+        (new Date(b.lastMessage.timeStamp).getTime()) - (new Date(a.lastMessage.timeStamp).getTime()))));
   }
 }

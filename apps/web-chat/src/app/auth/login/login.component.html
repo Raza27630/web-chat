@@ -12,7 +12,7 @@
         <ion-label position="floating">Email</ion-label>
         <ion-input [formControl]="email"></ion-input>
     </ion-item>
-    <ion-button shape="round" expand="full" [disabled]="!email.valid" (click)="login()">Round Button</ion-button>
+    <ion-button shape="round" expand="full" [disabled]="!email.valid" (click)="login()">Login</ion-button>
     <ion-label>
         Not registered yet? 
         <ion-router-link [routerLink]="['..','signUp']" class="underline">Sign Up</ion-router-link>

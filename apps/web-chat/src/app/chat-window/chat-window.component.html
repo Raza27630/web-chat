@@ -1,13 +1,14 @@
-<ion-header>
+<ion-header class="chat-header">
     <ion-toolbar>
         <ion-buttons slot="start">
             <a [routerLink]="['/','main','chat']">
                 <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
             </a>
             <ion-chip>
-                <ion-avatar>
+                <web-chat-avatar [url]="displayImg"></web-chat-avatar>
+                <!-- <ion-avatar>
                     <img src="./assets/avatar.svg">
-                </ion-avatar>
+                </ion-avatar> -->
                 <ion-label>{{displayName}}</ion-label>
             </ion-chip>
         </ion-buttons>

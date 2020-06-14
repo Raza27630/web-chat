@@ -31,4 +31,8 @@ export class AppController {
   async getUserGroup(@Payload() userId: string,) {
     return this.appService.getUserGroup(userId);
   }
+  @MessagePattern({ cmd: 'update_Avatar' })
+  async updateAvatar(@Payload() data: { userId: string, avatar: string }) {
+    return this.appService.updateUserAvatar(data.userId, data.avatar);
+  }
 }

@@ -16,7 +16,7 @@ export class TabsService {
       if (routerEvt.url.toLowerCase().includes('/main/chat')) {
         this._chatObserver$.next();
       }
-      if (routerEvt.url.toLowerCase().includes('/main/members')) {
+      if (routerEvt.url.toLowerCase() === '/main/members') {
         this._memebersObserver$.next();
       }
     });

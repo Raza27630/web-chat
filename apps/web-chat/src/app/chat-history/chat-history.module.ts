@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChatHistoryComponent } from './chat-history.component';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { UiElementsModule } from '@web-chat/ui-elements';
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    IonicModule
+    IonicModule,
+    UiElementsModule
   ]
 })
 export class ChatHistoryModule { }

@@ -28,9 +28,11 @@ export class AppService {
   getAllChatHistory(userId: string) {
     return from(this.chatModel.find({ members: { $eq: userId } }).populate('members').exec()).pipe(map(res => {
       return res.map(r => {
+        const userInfo = r.members.filter(k => k['_id'].toString() !== userId)[0];
         return {
           _id: r._id,
-          name: r.members.filter(k => k['_id'].toString() !== userId)[0]?.['displayName'],
+          name: userInfo?.['displayName'],
+          img: userInfo['img'],
           lastMessage: r.messages.splice(r.messages.length - 1, 1)?.[0]
         }
       })

@@ -18,7 +18,8 @@
     "paths": {
       "@web-chat/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@web-chat/auth-jwt-lib": ["libs/auth-jwt-lib/src/index.ts"],
-      "@web-chat/user-info": ["libs/user-info/src/index.ts"]
+      "@web-chat/user-info": ["libs/user-info/src/index.ts"],
+      "@web-chat/ui-elements": ["libs/ui-elements/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

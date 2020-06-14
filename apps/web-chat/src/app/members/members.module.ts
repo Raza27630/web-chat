@@ -4,7 +4,7 @@ import { MembersComponent } from './members.component';
 import { AddMemberComponent } from './add-member/add-member.component';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-
+import { UiElementsModule} from '@web-chat/ui-elements';
 const routes: Routes = [
   {
     path: '',
@@ -20,7 +20,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    UiElementsModule
   ]
 })
 export class MembersModule { }

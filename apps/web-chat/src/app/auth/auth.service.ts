@@ -19,4 +19,10 @@ export class AuthService {
       }
     }).pipe(tap(user => sessionStorage.setItem('user_ref', JSON.stringify(user))));
   }
+  uploadAvatar(form: FormData) {
+    return this.http.post(`/api/avatar`, form);
+  }
+  updateAvatarUrl(userId: string, url: string) {
+    return this.http.put(`/api/avatar/${userId}`, { url });
+  }
 }

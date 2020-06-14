@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, UseInterceptors, HttpCode, Put, UploadedFile, Req, Res } from '@nestjs/common';
 
 import { CreateUserDto } from '@web-chat/api-interfaces';
 import { UserId } from '@web-chat/user-info';
 
 import { AppService } from './app.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller()
 export class AppController {
@@ -32,5 +33,19 @@ export class AppController {
   @Get('userGroup')
   getUserGroup(@UserId() userId: string) {
     return this.appService.getUserGroup(userId);
+  }
+  @Post('avatar')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadAvatar(@UploadedFile('file') file: any, @Res() res) {
+    return res.send(file);
+  }
+  @Put('avatar/:id')
+  updateAvatar(@Body() avatarUrl: { url: string }, @Param('id') userId: string) {
+    return this.appService.updateAvatar(userId, avatarUrl.url);
+  }
+  @Get('avatar/:id')
+  getAvatar(@Param('id') url: string, @Res() res) {
+    const filePath = '/Users/vaishnavkesherwani/web-chat/web-chat/dist/apps/api/avatar/' + url;
+    return res.sendFile(filePath);
   }
 }

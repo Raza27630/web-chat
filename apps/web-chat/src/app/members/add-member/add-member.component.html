@@ -12,9 +12,7 @@
     <ion-list>
         <ion-list-header>Available Users</ion-list-header>
         <ion-item *ngFor="let member of (user$ | async)">
-            <ion-avatar slot="start">
-                <img src="./assets/avatar.svg">
-            </ion-avatar>
+            <web-chat-avatar class="avatar-medium" [url]="member.img"></web-chat-avatar>
             <ion-label>
                 <h3>{{member?.displayName}}</h3>
                 <p>{{member?.userEmail}}</p>

@@ -49,4 +49,11 @@ export class AppService {
       }]
     }).exec());
   }
+  updateUserAvatar(userId: string, avatar: string) {
+    return from(this.userModel.updateOne({
+      _id: userId
+    }, {
+      img: avatar
+    }).exec());
+  }
 }
